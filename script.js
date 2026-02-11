@@ -202,10 +202,26 @@ function createHeartExplosion() {
 
 // Music Player Setup
 function setupMusicPlayer() {
+    // Get all music controls and elements
     const musicControls = document.getElementById('musicControls');
-    const musicToggle = document.getElementById('musicToggle');
-    const bgMusic = document.getElementById('bgMusic');
-    const musicSource = document.getElementById('musicSource');
+    const musicToggles = [
+        document.getElementById('musicToggle'),
+        document.getElementById('musicToggle2'),
+        document.getElementById('musicToggle3'),
+        document.getElementById('musicToggle4')
+    ];
+    const bgMusics = [
+        document.getElementById('bgMusic'),
+        document.getElementById('bgMusic2'),
+        document.getElementById('bgMusic3'),
+        document.getElementById('bgMusic4')
+    ];
+    const musicSources = [
+        document.getElementById('musicSource'),
+        document.getElementById('musicSource2'),
+        document.getElementById('musicSource3'),
+        document.getElementById('musicSource4')
+    ];
 
     // Only show controls if music is enabled in config
     if (!config.music.enabled) {
@@ -213,30 +229,55 @@ function setupMusicPlayer() {
         return;
     }
 
-    // Set music source and volume
-    musicSource.src = config.music.musicUrl;
-    bgMusic.volume = config.music.volume || 0.5;
-    bgMusic.load();
+    // Set music sources and volume
+    const musicUrls = [
+        config.music.musicUrl,
+        config.music.musicUrl2,
+        config.music.musicUrl3,
+        config.music.musicUrl4
+    ];
+    musicSources.forEach((source, i) => {
+        source.src = musicUrls[i];
+        if (bgMusics[i]) {
+            bgMusics[i].volume = config.music.volume || 0.5;
+            bgMusics[i].load();
+        }
+    });
 
-    // Try autoplay if enabled
+    // Helper to stop all music except the selected one
+    function stopAllExcept(index) {
+        bgMusics.forEach((audio, i) => {
+            if (i !== index && !audio.paused) {
+                audio.pause();
+                audio.currentTime = 0;
+                musicToggles[i].textContent = config.music.startText || "🎵 Play Music";
+            }
+        });
+    }
+
+    // Set up toggle buttons
+    musicToggles.forEach((toggle, i) => {
+        toggle.textContent = config.music.startText || "🎵 Play Music";
+        toggle.addEventListener('click', () => {
+            const audio = bgMusics[i];
+            if (audio.paused) {
+                stopAllExcept(i);
+                audio.play();
+                toggle.textContent = config.music.stopText || "⏸️ Stop Music";
+            } else {
+                audio.pause();
+                toggle.textContent = config.music.startText || "🎵 Play Music";
+            }
+        });
+    });
+
+    // Optionally autoplay the first track if enabled
     if (config.music.autoplay) {
-        const playPromise = bgMusic.play();
+        const playPromise = bgMusics[0].play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
-                console.log("Autoplay prevented by browser");
-                musicToggle.textContent = config.music.startText;
+                musicToggles[0].textContent = config.music.startText || "🎵 Play Music";
             });
         }
     }
-
-    // Toggle music on button click
-    musicToggle.addEventListener('click', () => {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            musicToggle.textContent = config.music.stopText;
-        } else {
-            bgMusic.pause();
-            musicToggle.textContent = config.music.startText;
-        }
-    });
-} 
+}
