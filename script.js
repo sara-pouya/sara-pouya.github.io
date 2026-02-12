@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
     validateConfig();
 
     // Set texts from config
-    document.getElementById('valentineTitle').textContent = `${config.valentineName}, my love...`;
+    document.getElementById('valentineTitle').textContent = `${config.valentineName} ...`;
     
     // Set first question texts
     document.getElementById('question1Text').textContent = config.questions.first.text;
@@ -181,7 +181,6 @@ function celebrate() {
     
     // Set celebration messages
     document.getElementById('celebrationTitle').textContent = config.celebration.title;
-    document.getElementById('celebrationMessage').textContent = config.celebration.message;
     document.getElementById('celebrationEmojis').textContent = config.celebration.emojis;
     
     // Create heart explosion effect
@@ -202,25 +201,34 @@ function createHeartExplosion() {
 
 // Music Player Setup
 function setupMusicPlayer() {
-    // Get all music controls and elements
+    // Get all music controls and elements, now with SEVEN audios
     const musicControls = document.getElementById('musicControls');
     const musicToggles = [
         document.getElementById('musicToggle'),
         document.getElementById('musicToggle2'),
         document.getElementById('musicToggle3'),
-        document.getElementById('musicToggle4')
+        document.getElementById('musicToggle4'),
+        document.getElementById('musicToggle5'),
+        document.getElementById('musicToggle6'),
+        document.getElementById('musicToggle7')
     ];
     const bgMusics = [
         document.getElementById('bgMusic'),
         document.getElementById('bgMusic2'),
         document.getElementById('bgMusic3'),
-        document.getElementById('bgMusic4')
+        document.getElementById('bgMusic4'),
+        document.getElementById('bgMusic5'),
+        document.getElementById('bgMusic6'),
+        document.getElementById('bgMusic7')
     ];
     const musicSources = [
         document.getElementById('musicSource'),
         document.getElementById('musicSource2'),
         document.getElementById('musicSource3'),
-        document.getElementById('musicSource4')
+        document.getElementById('musicSource4'),
+        document.getElementById('musicSource5'),
+        document.getElementById('musicSource6'),
+        document.getElementById('musicSource7')
     ];
 
     // Only show controls if music is enabled in config
@@ -229,15 +237,18 @@ function setupMusicPlayer() {
         return;
     }
 
-    // Set music sources and volume
+    // Set music sources and volume (support up to 7)
     const musicUrls = [
         config.music.musicUrl,
         config.music.musicUrl2,
         config.music.musicUrl3,
-        config.music.musicUrl4
+        config.music.musicUrl4,
+        config.music.musicUrl5,
+        config.music.musicUrl6,
+        config.music.musicUrl7
     ];
     musicSources.forEach((source, i) => {
-        source.src = musicUrls[i];
+        if (musicUrls[i]) source.src = musicUrls[i];
         if (bgMusics[i]) {
             bgMusics[i].volume = config.music.volume || 0.5;
             bgMusics[i].load();
@@ -247,16 +258,17 @@ function setupMusicPlayer() {
     // Helper to stop all music except the selected one
     function stopAllExcept(index) {
         bgMusics.forEach((audio, i) => {
-            if (i !== index && !audio.paused) {
+            if (audio && i !== index && !audio.paused) {
                 audio.pause();
                 audio.currentTime = 0;
-                musicToggles[i].textContent = config.music.startText || "🎵 Play Music";
+                if (musicToggles[i]) musicToggles[i].textContent = config.music.startText || "🎵 Play Music";
             }
         });
     }
 
-    // Set up toggle buttons
+    // Set up toggle buttons for all 7 tracks
     musicToggles.forEach((toggle, i) => {
+        if (!toggle || !bgMusics[i]) return;
         toggle.textContent = config.music.startText || "🎵 Play Music";
         toggle.addEventListener('click', () => {
             const audio = bgMusics[i];
@@ -272,11 +284,13 @@ function setupMusicPlayer() {
     });
 
     // Optionally autoplay the first track if enabled
-    if (config.music.autoplay) {
+    if (config.music.autoplay && bgMusics[0]) {
         const playPromise = bgMusics[0].play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
-                musicToggles[0].textContent = config.music.startText || "🎵 Play Music";
+                if (musicToggles[0]) {
+                    musicToggles[0].textContent = config.music.startText || "🎵 Play Music";
+                }
             });
         }
     }
