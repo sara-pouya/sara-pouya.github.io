@@ -156,23 +156,23 @@ function drawText() {
     context.shadowOffsetX = 0;
     context.shadowOffsetY = 0;
 
-    if(frameNumber < 250){
+    if(frameNumber >= 3250 &&  frameNumber < 4000){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
         context.fillText("everyday day I cannot believe how lucky I am", canvas.width/2, canvas.height/2);
         opacity = opacity + 0.01;
     }
     //fades out the text by decreasing the opacity
-    if(frameNumber >= 250 && frameNumber < 500){
+    if(frameNumber >= 4000 && frameNumber < 4750){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
         context.fillText("everyday day I cannot believe how lucky I am", canvas.width/2, canvas.height/2);
         opacity = opacity - 0.01;
     }
 
     //needs this if statement to reset the opacity before next statement on canvas
-    if(frameNumber == 500){
+    if(frameNumber == 4750){
         opacity = 0;
     }
-    if(frameNumber > 500 && frameNumber < 750){
+    if(frameNumber > 4750 && frameNumber < 5500){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
 
         if (window.innerWidth < 600) {           //shortens long sentence for mobile screens
@@ -183,7 +183,7 @@ function drawText() {
 
         opacity = opacity + 0.01;
     }
-    if(frameNumber >= 750 && frameNumber < 1000){
+    if(frameNumber >= 5500 && frameNumber < 6250){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
         
         if (window.innerWidth < 600) {
@@ -195,64 +195,64 @@ function drawText() {
         opacity = opacity - 0.01;
     }
 
-    if(frameNumber == 1000){
+    if(frameNumber == 6250){
         opacity = 0;
     }
-    if(frameNumber > 1000 && frameNumber < 1250){
+    if(frameNumber > 6250 && frameNumber < 7000){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
-        context.fillText("to be alive, and to get to spend this life with you", canvas.width/2, canvas.height/2);
+        context.fillText("to be alive, and to get to spend my life with you", canvas.width/2, canvas.height/2);
         opacity = opacity + 0.01;
     }
-    if(frameNumber >= 1250 && frameNumber < 1500){
+    if(frameNumber >= 7000 && frameNumber < 7750){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
-        context.fillText("to be alive, and to get to spend this life with you", canvas.width/2, canvas.height/2);
+        context.fillText("to be alive, and to get to spend my life with you", canvas.width/2, canvas.height/2);
         opacity = opacity - 0.01;
     }
 
-    if(frameNumber == 1500){
+    if(frameNumber == 7750){
         opacity = 0;
     }
-    if(frameNumber > 1500 && frameNumber < 1750){
+    if(frameNumber > 7750 && frameNumber < 8500){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
-        context.fillText("is so incredibly, unfathomably unlikely", canvas.width/2, canvas.height/2);
+        context.fillText("is so incredibly unlikely", canvas.width/2, canvas.height/2);
         opacity = opacity + 0.01;
     }
-    if(frameNumber >= 1750 && frameNumber < 2000){
+    if(frameNumber >= 8500 && frameNumber < 9250){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
-        context.fillText("is so incredibly, unfathomably unlikely", canvas.width/2, canvas.height/2);
+        context.fillText("is so incredibly unlikely", canvas.width/2, canvas.height/2);
         opacity = opacity - 0.01;
     }
 
-    if(frameNumber == 2000){
+    if(frameNumber == 9250){
         opacity = 0;
     }
-    if(frameNumber > 2000 && frameNumber < 2250){
+    if(frameNumber > 9250 && frameNumber < 10000){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
 
         if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["and yet here I am to get the impossible", "chance to get to know you"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+            drawTextWithLineBreaks(["and here I am to get the impossible", "chance to get to know you"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
         } else {
-            context.fillText("and yet here I am to get the impossible chance to get to know you", canvas.width/2, canvas.height/2);
+            context.fillText("and here I am to get the impossible chance to get to know you", canvas.width/2, canvas.height/2);
         }
 
         opacity = opacity + 0.01;
     }
-    if(frameNumber >= 2250 && frameNumber < 2500){
+    if(frameNumber >= 10000 && frameNumber < 10750){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
 
         if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["and yet here I am to get the impossible", "chance to get to know you"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
+            drawTextWithLineBreaks(["and here I am to get the impossible", "chance to get to know you"], canvas.width / 2, canvas.height / 2, fontSize, lineHeight);
         } else {
-            context.fillText("and yet here I am to get the impossible chance to get to know you", canvas.width/2, canvas.height/2);
+            context.fillText("and here I am to get the impossible chance to get to know you", canvas.width/2, canvas.height/2);
         }
         
         opacity = opacity - 0.01;
     }
 
-    if(frameNumber == 2500){
+    if(frameNumber == 10750){
         opacity = 0;
     }
-    if(frameNumber > 2500 && frameNumber < 99999){
+    if(frameNumber > 10750 && frameNumber < 18250){
         context.fillStyle = `rgba(45, 45, 255, ${opacity})`;
 
         if (window.innerWidth < 600) {
@@ -263,15 +263,24 @@ function drawText() {
 
         opacity = opacity + 0.01;
     }
-    
-    if(frameNumber >= 2750 && frameNumber < 99999){
+
+    // Timing constants for smooth sequential fade-ins
+    const webLineStart = 11550; // "Let's capture..." line fade-in start (delay after previous)
+    const webLineFadeInDuration = 100; // ~100 frames = ~1.6s
+    const buttonFadeInDuration = 100;
+    const buttonStartFrame = webLineStart + webLineFadeInDuration + 30; // button starts after "Let's capture..." fades in
+
+    // Add global for smooth fades (must be kept outside drawText, you can hoist if necessary)
+    if (typeof window.captureLineOpacity === 'undefined') window.captureLineOpacity = 0;
+    if (typeof window.buttonOpacity === 'undefined') window.buttonOpacity = 0;
+
+    if (frameNumber >= 11000 && frameNumber < 99999) {
         context.fillStyle = `rgba(45, 45, 255, ${secondOpacity})`;
 
-
         if (window.innerWidth < 600) {
-            drawTextWithLineBreaks(["and I can't wait to spend all the time in", "the world to share that love with you!"], canvas.width / 2, (canvas.height/2 + 60), fontSize, lineHeight);
+            drawTextWithLineBreaks(["and I can't wait to spend all my life", " to share my love with you!"], canvas.width / 2, (canvas.height/2 + 60), fontSize, lineHeight);
         } else {
-            context.fillText("and I can't wait to spend all the time in the world to share that love with you!", canvas.width/2, (canvas.height/2 + 50));
+            context.fillText("and I can't wait to spend all my life to share my love with you!", canvas.width/2, (canvas.height/2 + 50));
         }
 
         secondOpacity = secondOpacity + 0.01;
@@ -281,29 +290,53 @@ function drawText() {
     let fadeOverlayOpacity = 0;
     let isFading = false;
 
-    if (frameNumber >= 30 && frameNumber < 99999) {
+    if (frameNumber >= 11250 && frameNumber < 99999) {
+        // Draw "Happy Valentine's Day <3>"
         context.fillStyle = `rgba(45, 45, 255, ${thirdOpacity})`;
 
         // Draw main Valentine's wish
         context.fillText("Happy Valentine's Day <3", canvas.width/2, (canvas.height/2 + 120));
         thirdOpacity = thirdOpacity + 0.01;
 
-        // Draw new line about capturing love and storing it
-        if (thirdOpacity > 0.5) {
+        // --- Animated sequential fade-in for "Let's capture..." line ---
+        // Calculate opacity for the 'Let's capture...' line based on frame
+        if (frameNumber > webLineStart) {
+            window.captureLineOpacity = Math.min(1, (frameNumber - webLineStart) / webLineFadeInDuration);
+        } else {
+            window.captureLineOpacity = 0;
+        }
+
+        if (window.captureLineOpacity > 0) {
+            context.save();
+            context.globalAlpha = window.captureLineOpacity * thirdOpacity; // link to parent line fade for consistency
+            context.fillStyle = `rgba(45, 45, 255, 1)`; // always use full blue, alpha handled by globalAlpha
             context.fillText(
-                "Let's capture our love and store it indefinitely on the world wide web.",
+                "Let's capture our love and store it indefinitely on the World Wide Web.",
                 canvas.width/2,
                 (canvas.height/2 + 170)
             );
+            context.globalAlpha = 1;
+            context.restore();
         }
 
-        // Show a button (the 'key') after a certain opacity threshold
-        if (thirdOpacity > 0.8) {
+        // --- BTN fade-in (Say cheese!) ---
+        let showBtn = false;
+        let btnFade = 0;
+        if (frameNumber > buttonStartFrame) {
+            window.buttonOpacity = Math.min(1, (frameNumber - buttonStartFrame) / buttonFadeInDuration);
+            showBtn = (window.buttonOpacity > 0);
+            btnFade = window.buttonOpacity;
+        } else {
+            window.buttonOpacity = 0;
+        }
+
+        if (showBtn) {
             // Create the button if it doesn't exist yet
-            if (!document.getElementById('archiveKey')) {
-                const keyButton = document.createElement('button');
+            let keyButton = document.getElementById('archiveKey');
+            if (!keyButton) {
+                keyButton = document.createElement('button');
                 keyButton.id = 'archiveKey';
-                keyButton.textContent = '🔑 Lock It Away on the Web Forever!';
+                keyButton.textContent = 'Say cheese!';
                 keyButton.style.position = 'fixed';
                 keyButton.style.left = '50%';
                 keyButton.style.top = 'calc(50% + 200px)';
@@ -317,7 +350,8 @@ function drawText() {
                 keyButton.style.cursor = 'pointer';
                 keyButton.style.zIndex = 1001;
                 keyButton.style.boxShadow = '0 3px 15px rgba(60,40,200,0.21)';
-                keyButton.style.transition = 'background 0.3s,color 0.3s';
+                keyButton.style.transition = 'background 0.3s,color 0.3s, opacity 0.2s';
+                keyButton.style.opacity = '0'; // Start hidden
 
                 keyButton.onmouseover = function() {
                     keyButton.style.background = '#2d2dff';
@@ -488,10 +522,17 @@ function drawText() {
                             fadeOverlayDiv.style.opacity = fadeOverlayOpacity;
                             document.body.appendChild(fadeOverlayDiv);
                         }
-                    }, 700); // slightly reduce fade delay for responsiveness
+                    }, 700);
                 };
 
+                keyButton.style.opacity = "0"; // ensure hidden for fade-in
                 document.body.appendChild(keyButton);
+            }
+            // Animate opacity on existing button
+            let keyButtonEl = document.getElementById('archiveKey');
+            if (keyButtonEl) {
+                keyButtonEl.style.opacity = `${btnFade}`;
+                keyButtonEl.style.pointerEvents = btnFade > 0.9 ? "auto" : "none";
             }
         }
     }

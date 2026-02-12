@@ -296,7 +296,8 @@ h2 {
 .music-controls {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
 }
 
