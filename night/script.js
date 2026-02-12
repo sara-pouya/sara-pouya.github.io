@@ -489,7 +489,7 @@ function drawText() {
 
                         // Archive link
                         const archiveLink = document.createElement('a');
-                        archiveLink.href = "https://web.archive.org/";
+                        archiveLink.href = "https://web.archive.org/web/20260212161557/https://sara-pouya.github.io/night/";
                         archiveLink.target = "_blank";
                         archiveLink.style.color = "#ce4b99";
                         archiveLink.style.fontWeight = "bold";
